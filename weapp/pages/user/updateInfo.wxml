@@ -1,0 +1,17 @@
+
+<view class="container">
+    
+    <input-avatar bind_init="_initComponent"></input-avatar>
+    
+    <view class="weui-cells weui-cells_after-title">
+        <input-picker-sex bind_init="_initComponent"></input-picker-sex>
+        <input-picker-country bind_init="_initComponent"></input-picker-country>
+    </view>
+    
+    <view class="handle-btn">
+        <button type="primary" class="weui-btn">保存信息</button>
+        <button type="default" data-wpy-evt="7-3" bindtap="_proxy" class="weui-btn">个人中心</button>
+    </view>
+    
+    <footer bind_init="_initComponent"></footer>
+</view>

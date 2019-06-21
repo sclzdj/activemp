@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "修改信息",
+    "component": true,
+    "usingComponents": {
+        "footer": "../../components/footer",
+        "input-avatar": "../../components/form/avatar",
+        "input-picker-sex": "../../components/form/picker-sex",
+        "input-picker-country": "../../components/form/picker-country"
+    }
+}

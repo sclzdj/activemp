@@ -1,0 +1,20 @@
+.weui-cells {
+  width: 100%;
+}
+.weui-cells_after-title {
+  margin-top: 10px;
+}
+.handle-btn {
+  width: 100%;
+  margin: 10px 0;
+}
+.handle-btn .weui-btn {
+  width: 100%;
+  margin: 0 auto;
+  height: 50px;
+  line-height: 50px;
+}
+.handle-btn .weui-btn + .weui-btn {
+  margin-top: 5px;
+}
+

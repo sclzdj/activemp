@@ -1,0 +1,72 @@
+<style lang="less">
+    .weui-cells {
+        width: 100%;
+    }
+
+    .weui-cells_after-title {
+        margin-top: 10px;
+    }
+
+    .handle-btn {
+        width: 100%;
+        margin: 10px 0;
+
+        .weui-btn {
+            width: 100%;
+            margin: 0 auto;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .weui-btn + .weui-btn {
+            margin-top: 5px;
+        }
+    }
+</style>
+<template>
+    <div class="container">
+        <!--修改头像-->
+        <input-avatar></input-avatar>
+        <!--修改个人信息-->
+        <view class="weui-cells weui-cells_after-title">
+            <input-picker-sex></input-picker-sex>
+            <input-picker-country></input-picker-country>
+        </view>
+        <!--操作按钮-->
+        <div class="handle-btn">
+            <button class="weui-btn" type="primary">保存信息</button>
+            <button class="weui-btn" type="default" @tap="wxSwitchTab('/pages/user/center')">个人中心</button>
+        </div>
+        <!--页脚组件-->
+        <footer></footer>
+    </div>
+</template>
+
+<script>
+    import wepy from '@wepy/core'
+    import {mapState} from '@wepy/x';
+    import store from '../../store';
+    import wxUtil from '../../util/wx.js';
+
+    wepy.page({
+        store,
+        data: {},
+        computed: {},
+        methods: {
+            wxSwitchTab:(url)=>{
+                wxUtil.wxSwitchTab(url);
+            }
+        }
+    });
+</script>
+<config>
+    {
+    navigationBarTitleText: '修改信息',
+    "usingComponents": {
+    "footer": "~@/components/footer",
+    "input-avatar": "~@/components/form/avatar",
+    "input-picker-sex": "~@/components/form/picker-sex",
+    "input-picker-country": "~@/components/form/picker-country"
+    }
+    }
+</config>

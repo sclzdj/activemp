@@ -1,0 +1,84 @@
+<style lang="less">
+    .avatar {
+        image {
+            width: 100px;
+            height: 100px;
+            margin: 10px auto;
+            border-radius: 50%;
+        }
+    }
+
+    .weui-cells {
+        width: 100%;
+    }
+
+    .handle-btn {
+        width: 100%;
+        margin: 10px 0;
+        navigator{
+            display: block;
+            margin-top: 5px;
+        }
+        .weui-btn {
+            width: 100%;
+            margin: 5px auto;
+            height: 50px;
+            line-height: 50px;
+        }
+    }
+</style>
+<template>
+    <div class="container">
+        <!--头像-->
+        <div class="avatar">
+            <image class="weui-media-box__thumb"
+                   src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
+        </div>
+        <!--个人信息-->
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">昵称</view>
+                <view class="weui-cell__ft">说明文字</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">性别</view>
+                <view class="weui-cell__ft">说明文字</view>
+            </view>
+            <view class="weui-cell">
+                <view class="weui-cell__bd">国家</view>
+                <view class="weui-cell__ft">说明文字</view>
+            </view>
+        </view>
+        <!--操作按钮-->
+        <div class="handle-btn">
+            <navigator url="/pages/user/updateInfo"><button class="weui-btn" type="primary">修改信息</button></navigator>
+            <button class="weui-btn" type="default">重置信息</button>
+        </div>
+        <!--页脚组件-->
+        <footer></footer>
+    </div>
+</template>
+
+<script>
+    import wepy from '@wepy/core'
+    import {mapState} from '@wepy/x';
+    import store from '../../store';
+
+    wepy.page({
+        store,
+
+        data: {},
+
+        computed: {},
+
+        methods: {}
+    });
+</script>
+<config>
+    {
+        navigationBarTitleText: '个人中心',
+        "usingComponents": {
+            "footer": "~@/components/footer"
+        }
+    }
+</config>

@@ -1,0 +1,24 @@
+.avatar image {
+  width: 100px;
+  height: 100px;
+  margin: 10px auto;
+  border-radius: 50%;
+}
+.weui-cells {
+  width: 100%;
+}
+.handle-btn {
+  width: 100%;
+  margin: 10px 0;
+}
+.handle-btn navigator {
+  display: block;
+  margin-top: 5px;
+}
+.handle-btn .weui-btn {
+  width: 100%;
+  margin: 5px auto;
+  height: 50px;
+  line-height: 50px;
+}
+

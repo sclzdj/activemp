@@ -1,0 +1,53 @@
+.search-bar {
+  width: 100%;
+  height: 48px;
+  position: relative;
+}
+.search-bar .weui-search-bar {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.search-bar .weui-search-bar .weui-search-bar__cancel-btn {
+  font-size: 15px;
+}
+.navbar {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  color: #666666;
+  display: flex;
+  justify-content: space-around;
+}
+.navbar .item {
+  width: 96%;
+  height: 100%;
+  text-align: center;
+  background: #EfEfEf;
+  padding: 0 2%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border-left: 1px solid #FFFFFF;
+  border-right: 1px solid #FFFFFF;
+}
+.navbar .active {
+  background: #ffffff;
+}
+.weui-panel {
+  margin-top: 0;
+}
+.loadmore {
+  width: 100%;
+  background: #FFFFFF;
+}
+.loadmore .weui-loadmore {
+  margin: 8px auto;
+}
+.loadmore .weui-loadmore .weui-loadmore__tips {
+  font-size: 14px;
+  color: #999999;
+}
+

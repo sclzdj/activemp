@@ -1,0 +1,36 @@
+<style lang="less">
+    @import '../../style/weui/weui.less';
+    .weui-cells {
+        width: 100%;
+    }
+</style>
+<template>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">国家/地区</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker @change="bindCountryChange" value="{{countryIndex}}" range="{{countries}}">
+                    <view class="weui-select weui-select_in-select-after">{{countries[countryIndex]}}</view>
+                </picker>
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from '@wepy/core'
+
+    wepy.component({
+        data: {
+            countries: ['中国', '美国', '英国', '日本', '法国'],
+            countryIndex: 0
+        },
+        methods: {
+            bindCountryChange(e) {
+                this.countryIndex = e.$wx.detail.value;
+            }
+        }
+    })
+</script>
+

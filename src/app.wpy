@@ -1,0 +1,77 @@
+<style lang="less">
+    @import './style/weui/weui.less';
+
+    .container {
+        min-height: 100vh;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-sizing: border-box;
+        background: #EEEEF4;
+    }
+
+    .weui-panel {
+        width: 100%;
+    }
+</style>
+
+<script>
+    import wepy from '@wepy/core';
+    import vuex from '@wepy/x';
+
+    wepy.use(vuex);
+
+    wepy.app({
+        hooks: {
+            // App 级别 hook，对整个 App 生效
+            // 同时存在 Page hook 和 App hook 时，优先执行 Page hook，返回值再交由 App hook 处
+            // 'before-setData': function (dirty) {
+            //     console.log('setData dirty: ', dirty);
+            //     return dirty;
+            // }
+        },
+        globalData: {
+            userInfo: null
+        },
+
+        methods: {
+
+        }
+
+    });
+</script>
+<config>
+    {
+    pages: [
+    'pages/index',
+    'pages/event/list',
+    'pages/user/center',
+    'pages/user/updateInfo'
+    ],
+    window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#1e90ff',
+    navigationBarTitleText: '鲸活动',
+    navigationBarTextStyle: 'white'
+    },
+    tabBar: {
+    list: [{
+    pagePath: "pages/index",
+    text: "首页",
+    iconPath: 'images/index.png',
+    selectedIconPath: 'images/index-active.png'
+    }, {
+    pagePath: "pages/event/list",
+    text: "活动",
+    iconPath: 'images/category.png',
+    selectedIconPath: 'images/category-active.png'
+    }, {
+    pagePath: "pages/user/center",
+    text: "我的",
+    iconPath: 'images/my.png',
+    selectedIconPath: 'images/my-active.png'
+    }]
+    }
+    }
+</config>

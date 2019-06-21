@@ -1,0 +1,22 @@
+<style lang="less">
+    @import '../style/weui/weui.less';
+    .weui-footer {
+        width: 100%;
+        margin: 10px 0;
+    }
+</style>
+<template>
+    <!--页脚-->
+    <div class="weui-footer">
+        <view class="weui-footer__text">鲸活动提供技术支持</view>
+        <view class="weui-footer__text">Copyright © 2019-2??? capwhale.com</view>
+    </div>
+</template>
+<script>
+    import wepy from '@wepy/core'
+
+    wepy.component({
+
+    })
+</script>
+

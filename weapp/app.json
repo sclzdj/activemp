@@ -1,0 +1,38 @@
+{
+    "pages": [
+        "pages/index",
+        "pages/event/list",
+        "pages/user/center",
+        "pages/user/updateInfo"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#1e90ff",
+        "navigationBarTitleText": "鲸活动",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "list": [
+            {
+                "pagePath": "pages/index",
+                "text": "首页",
+                "iconPath": "images/index.png",
+                "selectedIconPath": "images/index-active.png"
+            },
+            {
+                "pagePath": "pages/event/list",
+                "text": "活动",
+                "iconPath": "images/category.png",
+                "selectedIconPath": "images/category-active.png"
+            },
+            {
+                "pagePath": "pages/user/center",
+                "text": "我的",
+                "iconPath": "images/my.png",
+                "selectedIconPath": "images/my-active.png"
+            }
+        ]
+    },
+    "component": true,
+    "usingComponents": {}
+}

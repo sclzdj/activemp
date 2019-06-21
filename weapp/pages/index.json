@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "鲸活动",
+    "component": true,
+    "usingComponents": {
+        "footer": "../components/footer"
+    }
+}
