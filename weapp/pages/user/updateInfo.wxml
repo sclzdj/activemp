@@ -1,17 +1,74 @@
 
-<view class="container">
-    
-    <input-avatar bind_init="_initComponent"></input-avatar>
-    
-    <view class="weui-cells weui-cells_after-title">
-        <input-picker-sex bind_init="_initComponent"></input-picker-sex>
-        <input-picker-country bind_init="_initComponent"></input-picker-country>
+<form data-wpy-evt="11-0" bindsubmit="_proxy">
+    <view class="container">
+        
+        <view class="avatar">
+            <view id="uploaderFiles" class="weui-uploader__files">
+                <view wx:if="{{ !avatarUploadRun && user.avatarUrl==='' && !avatarUploadTipsStatus }}" class="weui-uploader__input-box">
+                    <view data-wpy-evt="11-1" bindtap="_proxy" class="weui-uploader__input"></view>
+                </view>
+                <view wx:if="{{ !avatarUploadRun && avatar!=='' && avatarUploadStatus }}" class="weui-uploader__file">
+                    <image src="{{avatar}}" data-wpy-evt="11-2" bindtap="_proxy" class="weui-uploader__img"></image>
+                </view>
+                <view wx:if="{{ avatarUploadRun }}" class="weui-uploader__file weui-uploader__file_status">
+                    <image src="{{avatarTmp}}" class="weui-uploader__img"></image>
+                    <view class="weui-uploader__file-content">{{progress}}%</view>
+                </view>
+                <view wx:if="{{ !avatarUploadRun && !avatarUploadStatus }}" class="weui-uploader__file weui-uploader__file_status">
+                    <image src="{{avatarTmp}}" class="weui-uploader__img"></image>
+                    <view data-wpy-evt="11-3" bindtap="_proxy" class="weui-uploader__file-content">
+                        <icon type="warn" size="23" color="#F43530"></icon>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{ avatarUploadTipsStatus && avatarUploadStatus }}" class="upload-success">
+            {{avatarUploadTips}}
+            <button data-wpy-evt="11-4" bindtap="_proxy" class="clear">还原</button>
+        </view>
+        <view wx:if="{{ avatarUploadTipsStatus && !avatarUploadStatus }}" class="upload-fail">
+            {{avatarUploadTips}}
+            <button data-wpy-evt="11-5" bindtap="_proxy" class="reupload">重新上传</button><button data-wpy-evt="11-6" bindtap="_proxy" class="clear">还原</button>
+        </view>
+        
+        <input name="avatarUrl" value="{{avatar}}" style="display: none;" class="weui-input"></input>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cell weui-cell_select">
+                    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                        <view class="weui-label">昵称</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input name="nickName" value="{{ user.nickName }}" placeholder="请输入昵称" class="weui-input"></input>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_select">
+                    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                        <view class="weui-label">性别</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <picker name="gender" value="{{sexIndex}}" placeholder="请选择性别" range="{{sexs}}" data-wpy-evt="11-7" bindchange="_proxy">
+                            <view class="weui-select weui-select_in-select-after">{{sexs[sexIndex]}}</view>
+                        </picker>
+                    </view>
+                </view>
+                <view class="weui-cell weui-cell_select">
+                    <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                        <view class="weui-label">地区</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input value="{{user.province}}" bindinput="_proxy" data-model-id="0" name="province" placeholder="请输入地区" class="weui-input"></input>
+                    </view>
+                </view>
+            </view>
+        </view>
+        
+        <view class="handle-btn">
+            <button type="primary" form-type="submit" class="weui-btn">保存信息</button>
+            <button type="default" data-wpy-evt="11-8" bindtap="_proxy" class="weui-btn">个人中心</button>
+        </view>
+        
+        
+        <footer bind_init="_initComponent"></footer>
     </view>
-    
-    <view class="handle-btn">
-        <button type="primary" class="weui-btn">保存信息</button>
-        <button type="default" data-wpy-evt="7-3" bindtap="_proxy" class="weui-btn">个人中心</button>
-    </view>
-    
-    <footer bind_init="_initComponent"></footer>
-</view>
+</form>

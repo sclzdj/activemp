@@ -45,6 +45,19 @@
 
     .weui-panel {
         margin-top: 0;
+        .remark{
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            border-left:1px solid #eeeeee;
+            padding-left: 10px;
+            margin-left: 10px;
+        }
+        .re2{
+            font-size: 11px;
+            color: #999999;
+            line-height: 18px;
+        }
     }
 
     .loadmore {
@@ -69,15 +82,16 @@
                 <view class="weui-search-bar__form">
                     <view class="weui-search-bar__box">
                         <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                        <input type="text" class="weui-search-bar__input" placeholder="搜索" :value="inputVal"
-                               :focus="inputShowed" bindblur="hideInput" bindinput="inputTyping"/>
-                        <view class="weui-icon-clear" v-if="inputVal.length > 0" bindtap="clearInput">
+                        <input type="text" class="weui-search-bar__input" placeholder="搜索" :value="keywords"
+                               :focus="inputShowed" bindblur="hideInput" bindinput="inputTyping"
+                               bindconfirm="onConfirm"/>
+                        <view class="weui-icon-clear" v-if="keywords.length > 0" bindtap="clearInput">
                             <icon type="clear" size="14"></icon>
                         </view>
                     </view>
                     <label class="weui-search-bar__label" :hidden="inputShowed" bindtap="showInput">
                         <icon class="weui-icon-search" type="search" size="14"></icon>
-                        <view class="weui-search-bar__text">搜索</view>
+                        <view class="weui-search-bar__text">{{keywords===''?'搜索':keywords}}</view>
                     </label>
                 </view>
                 <view class="weui-search-bar__cancel-btn" :hidden="!inputShowed" bindtap="hideInput">取消</view>
@@ -85,163 +99,45 @@
         </div>
         <!--导航栏-->
         <div class="navbar">
-            <div class="item active">全部活动全部活动全部活动</div>
-            <div class="item">热门活动</div>
-            <div class="item">最新活动</div>
+            <div class="item" :class="{'active':type!='hot'&&type!='new'}" @tap="loadTypePage('')">
+                全部活动
+            </div>
+            <div class="item" :class="{'active':type=='hot'}" @tap="loadTypePage('hot')">热门活动</div>
+            <div class="item" :class="{'active':type=='new'}" @tap="loadTypePage('new')">最新活动</div>
         </div>
         <!--数据列表-->
-        <view class="weui-panel weui-panel_access">
+        <view scroll-y="true" class="weui-panel weui-panel_access">
             <view class="weui-panel__bd">
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                <navigator v-for="event in events" url="{{'/pages/event/show?id='+event.id}}" class="weui-media-box weui-media-box_appmsg"
+                           hover-class="weui-cell_active">
                     <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                         <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
+                               src="{{event.pic}}"/>
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
+                        <view class="weui-media-box__title">{{event.title}}
                         </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
+                        <view class="weui-media-box__desc">{{event.describe}}</view>
                     </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
-                        </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
-                        </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
-                        </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
-                        </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一
-                        </view>
-                        <view class="weui-media-box__desc">
-                            由各种物质组成的巨型球状天标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一体，叫做星球。星球有一定的形状，有自己的运行轨道。
-                        </view>
-                    </view>
-                </navigator>
-                <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb"
-                               src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"/>
-                    </view>
-                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <view class="weui-media-box__title">标题二</view>
-                        <view class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</view>
-                    </view>
+                    <div class="remark">
+                        <div class="re re1">发布</div>
+                        <div class="re re2">{{event.created_at}}</div>
+                        <div class="re re1">浏览</div>
+                        <div class="re re2">{{event.pv}}</div>
+                    </div>
                 </navigator>
             </view>
         </view>
         <!--加载更多-->
         <view class="page__bd loadmore">
-            <view class="weui-loadmore">
+            <view class="weui-loadmore" v-if="events.length==0">
+                <view class="weui-loadmore__tips">暂无数据</view>
+            </view>
+            <view class="weui-loadmore" v-if="loading">
                 <view class="weui-loading"></view>
                 <view class="weui-loadmore__tips">正在加载</view>
             </view>
-            <view class="weui-loadmore">
-                <view class="weui-loadmore__tips">暂无数据</view>
-            </view>
-            <view class="weui-loadmore">
+            <view class="weui-loadmore" v-if="none">
                 <view class="weui-loadmore__tips">我是有底线的</view>
             </view>
         </view>
@@ -254,30 +150,89 @@
     import wepy from '@wepy/core'
     import {mapState} from '@wepy/x';
     import store from '../../store';
+    import wxUtil from '../../util/wx.js';
 
     wepy.page({
         store,
 
         data: {
-            inputVal: "",
-            inputShowed: false
+            inputShowed: false,
+            keywords: "",
+            type: "",
+            page: 1,
+            pageSize: 10,
+            loading: false,
+            none: false,
+            options:{}
         },
 
-        computed: {},
+        computed: {
+            ...mapState(['events']),
+        },
+        async onLoad(options) {
+            this.options=options;
+            if (options.type !== undefined) {
+                this.type = options.type;
+            }
+            if (options.keywords !== undefined) {
+                this.keywords = options.keywords;
+            }
+            await this.$store.dispatch('getEvents', {
+                type: this.type,
+                keywords: this.keywords,
+                page: this.page,
+                pageSize: this.pageSize
+            });//actions方法调用方法
+        },
+        /**
+         * 上拉加载更多
+         */
+        async onReachBottom() {
+            this.loading = true;
+            let length = await this.$store.dispatch('getAppendEvents', {
+                type: this.type,
+                keywords: this.keywords,
+                page: this.page + 1,
+                pageSize: this.pageSize
+            });//actions方法调用方法
+            this.loading = false;
+            if (length > 0) {
+                this.page++;
+            } else {
+                this.none = true;
+            }
+        },
 
         methods: {
+            loadTypePage(type = '') {
+                if (this.type == 'hot' && type == 'hot') {
+                    return false;
+                }
+                if (this.type == 'new' && type == 'new') {
+                    return false;
+                }
+                if ((this.type != 'hot' && this.type != 'new') && (type != 'hot' && type != 'new')) {
+                    return false;
+                }
+                this.wxReLaunch('/pages/event/list?keywords=' + this.keywords + '&type=' + type);
+            },
+            onConfirm() {
+                this.wxReLaunch('/pages/event/list?keywords=' + this.keywords + '&type=' + this.type);
+            },
+            wxReLaunch(url) {
+                wxUtil.wxReLaunch(url);
+            },
             showInput() {
                 this.inputShowed = true;
             },
             hideInput() {
-                this.inputVal = '';
                 this.inputShowed = false;
             },
             clearInput() {
-                this.inputVal = '';
+                this.keywords = '';
             },
             inputTyping(e) {
-                this.inputVal = e.$wx.detail.value;
+                this.keywords = e.$wx.detail.value;
             }
         }
     });

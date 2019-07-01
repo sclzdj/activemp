@@ -1,3 +1,70 @@
+.avatar {
+  margin: 10px auto;
+}
+.avatar .weui-uploader__file {
+  margin: 0;
+  background: #FFFFFF;
+}
+.avatar .weui-uploader__file .weui-uploader__img {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+.avatar .weui-uploader__input-box {
+  margin: 0;
+  width: 98px;
+  height: 98px;
+  background: #FFFFFF;
+}
+.avatar .weui-uploader__input-box .weui-uploader__input {
+  width: 98px;
+  height: 98px;
+  margin: 0 auto;
+}
+.upload-success {
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  color: #09BB07;
+  font-size: 14px;
+}
+.upload-success .clear {
+  display: inline;
+  margin: 0;
+  padding: 2px 20px;
+  text-align: center;
+  border: none;
+  color: #f00000;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.upload-fail {
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  color: #f00000;
+  font-size: 14px;
+}
+.upload-fail .reupload {
+  display: inline;
+  margin: 0;
+  padding: 2px 20px;
+  text-align: center;
+  border: none;
+  color: #09BB07;
+  font-size: 12px;
+  margin-left: 5px;
+}
+.upload-fail .clear {
+  display: inline;
+  margin: 0;
+  padding: 2px 20px;
+  text-align: center;
+  border: none;
+  color: #f00000;
+  font-size: 12px;
+  margin-left: 5px;
+}
 .weui-cells {
   width: 100%;
 }

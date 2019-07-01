@@ -39,6 +39,19 @@
 .weui-panel {
   margin-top: 0;
 }
+.weui-panel .remark {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  border-left: 1px solid #eeeeee;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+.weui-panel .re2 {
+  font-size: 11px;
+  color: #999999;
+  line-height: 18px;
+}
 .loadmore {
   width: 100%;
   background: #FFFFFF;

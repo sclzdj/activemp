@@ -2,6 +2,7 @@
     "pages": [
         "pages/index",
         "pages/event/list",
+        "pages/event/show",
         "pages/user/center",
         "pages/user/updateInfo"
     ],

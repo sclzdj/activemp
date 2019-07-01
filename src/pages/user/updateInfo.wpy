@@ -1,4 +1,81 @@
 <style lang="less">
+    .avatar {
+        margin: 10px auto;
+
+        .weui-uploader__file {
+            margin: 0;
+            background: #FFFFFF;
+
+            .weui-uploader__img {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto;
+            }
+        }
+
+        .weui-uploader__input-box {
+            margin: 0;
+            width: 98px;
+            height: 98px;
+            background: #FFFFFF;
+
+            .weui-uploader__input {
+                width: 98px;
+                height: 98px;
+                margin: 0 auto;
+            }
+        }
+
+    }
+
+    .upload-success {
+        width: 100%;
+        line-height: 30px;
+        text-align: center;
+        color: #09BB07;
+        font-size: 14px;
+
+        .clear {
+            display: inline;
+            margin: 0;
+            padding: 2px 20px;
+            text-align: center;
+            border: none;
+            color: #f00000;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+    }
+
+    .upload-fail {
+        width: 100%;
+        line-height: 30px;
+        text-align: center;
+        color: #f00000;
+        font-size: 14px;
+
+        .reupload {
+            display: inline;
+            margin: 0;
+            padding: 2px 20px;
+            text-align: center;
+            border: none;
+            color: #09BB07;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .clear {
+            display: inline;
+            margin: 0;
+            padding: 2px 20px;
+            text-align: center;
+            border: none;
+            color: #f00000;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+    }
+
     .weui-cells {
         width: 100%;
     }
@@ -24,22 +101,87 @@
     }
 </style>
 <template>
-    <div class="container">
-        <!--修改头像-->
-        <input-avatar></input-avatar>
-        <!--修改个人信息-->
-        <view class="weui-cells weui-cells_after-title">
-            <input-picker-sex></input-picker-sex>
-            <input-picker-country></input-picker-country>
-        </view>
-        <!--操作按钮-->
-        <div class="handle-btn">
-            <button class="weui-btn" type="primary">保存信息</button>
-            <button class="weui-btn" type="default" @tap="wxSwitchTab('/pages/user/center')">个人中心</button>
+    <form @submit="formSubmit">
+        <div class="container">
+            <!--修改头像-->
+            <div class="avatar">
+                <view class="weui-uploader__files" id="uploaderFiles">
+                    <view class="weui-uploader__input-box"
+                          v-if="!avatarUploadRun && user.avatarUrl==='' && !avatarUploadTipsStatus">
+                        <view class="weui-uploader__input" @tap="uploadImg"></view>
+                    </view>
+                    <view class="weui-uploader__file"
+                          v-if="!avatarUploadRun && avatar!=='' && avatarUploadStatus">
+                        <image class="weui-uploader__img"
+                               src="{{avatar}}" @tap="uploadImg"/>
+                    </view>
+                    <view class="weui-uploader__file weui-uploader__file_status" v-if="avatarUploadRun">
+                        <image class="weui-uploader__img"
+                               src="{{avatarTmp}}"/>
+                        <view class="weui-uploader__file-content">{{progress}}%</view>
+                    </view>
+                    <view class="weui-uploader__file weui-uploader__file_status"
+                          v-if="!avatarUploadRun && !avatarUploadStatus">
+                        <image class="weui-uploader__img"
+                               src="{{avatarTmp}}"/>
+                        <view class="weui-uploader__file-content" @tap="uploadImg">
+                            <icon type="warn" size="23" color="#F43530"></icon>
+                        </view>
+                    </view>
+                </view>
+            </div>
+            <div class="upload-success" v-if="avatarUploadTipsStatus && avatarUploadStatus">
+                {{avatarUploadTips}}
+                <button class="clear" @tap="clearUpload()">还原</button>
+            </div>
+            <div class="upload-fail" v-if="avatarUploadTipsStatus && !avatarUploadStatus">
+                {{avatarUploadTips}}
+                <button class="reupload" @tap="reUpload()">重新上传</button><button class="clear" @tap="clearUpload()">还原</button>
+            </div>
+            <!--修改个人信息-->
+            <input style="display: none;" class="weui-input" name="avatarUrl" value="{{avatar}}"/>
+            <view class="weui-cells weui-cells_after-title">
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell weui-cell_select">
+                        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                            <view class="weui-label">昵称</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input class="weui-input" name="nickName" :value="user.nickName" placeholder="请输入昵称"/>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_select">
+                        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                            <view class="weui-label">性别</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <picker @change="bindSexChange" name="gender" value="{{sexIndex}}" placeholder="请选择性别"
+                                    range="{{sexs}}">
+                                <view class="weui-select weui-select_in-select-after">{{sexs[sexIndex]}}</view>
+                            </picker>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_select">
+                        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                            <view class="weui-label">地区</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input v-model="user.province" class="weui-input" name="province" value="{{user.province}}"
+                                   placeholder="请输入地区"/>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <!--操作按钮-->
+            <div class="handle-btn">
+                <button class="weui-btn" type="primary" form-type="submit">保存信息</button>
+                <button class="weui-btn" type="default" @tap="wxSwitchTab('/pages/user/center')">个人中心</button>
+            </div>
+            <!--</form>-->
+            <!--页脚组件-->
+            <footer></footer>
         </div>
-        <!--页脚组件-->
-        <footer></footer>
-    </div>
+    </form>
 </template>
 
 <script>
@@ -47,26 +189,127 @@
     import {mapState} from '@wepy/x';
     import store from '../../store';
     import wxUtil from '../../util/wx.js';
+    import uploadUtil from '../../util/upload.js';
 
     wepy.page({
         store,
-        data: {},
-        computed: {},
+        data: {
+            uploadFilename: 'yydd/241414141sadaa',
+            sexs: ['未知', '男', '女'],
+            avatar: '',
+            avatarInput:'',
+            user: {
+                avatarUrl: '',
+                nickName: '',
+                gender: 0,
+                province: ''
+            },
+            oldAvatarUrl: '',
+            avatarUploadRun: false,
+            avatarUploadStatus: true,
+            avatarUploadTipsStatus: false,
+            avatarUploadTips: '',
+            avatarTmp: '',
+            progress: 0
+        },
+        computed: {
+            sexIndex() {
+                return this.user.gender === undefined ? 0 : this.user.gender;
+            },
+            ...mapState(['me'])
+        },
         methods: {
-            wxSwitchTab:(url)=>{
+            clearUpload() {
+                this.avatarUploadRun = false;
+                this.avatarUploadStatus = true;
+                this.avatarUploadTipsStatus = false;
+                this.avatarUploadTips = '';
+                this.avatarTmp = '';
+                this.progress = 0;
+                this.user.avatarUrl = this.oldAvatarUrl;
+                this.avatar = this.oldAvatarUrl;
+                this.avatarInput=this.oldAvatarUrl;
+            },
+            async reUpload() {
+                return await this.upload(this.avatarTmp);
+            },
+            async uploadImg() {
+                let tempFilePath = await uploadUtil.image();
+                return await this.upload(tempFilePath);
+            },
+            async upload(tempFilePath) {
+                this.avatarUploadRun = true;
+                this.avatarUploadStatus = true;
+                this.avatarUploadTipsStatus = false;
+                this.avatarUploadTips = '';
+                this.avatarTmp = tempFilePath;
+                var _this = this;
+                let res = await uploadUtil.upload(tempFilePath, {filename: this.uploadFilename}, function (progress) {//处理进度条
+                    _this.progress = progress;
+                });
+                if (res.statusCode < 200 || res.statusCode >= 300) {
+                    this.avatarUploadRun = false;
+                    this.avatarUploadStatus = false;
+                    this.avatarUploadTipsStatus = true;
+                    this.avatarUploadTips = res.data.message;
+                    this.avatarTmp = tempFilePath;
+                    this.progress = 0;
+                    return false
+                } else {
+                    if (res.data.status_code < 200 || res.data.status_code >= 300) {
+                        this.avatarUploadRun = false;
+                        this.avatarUploadStatus = false;
+                        this.avatarUploadTipsStatus = true;
+                        this.avatarUploadTips = res.data.message;
+                        this.avatarTmp = tempFilePath;
+                        this.progress = 0;
+                        return false
+                    }
+                    this.avatarUploadRun = false;
+                    this.avatarUploadStatus = true;
+                    this.avatarUploadTipsStatus = true;
+                    this.avatarUploadTips = '上传成功';
+                    this.avatarTmp = '';
+                    this.avatar = res.data.url+'?'+Math.random();
+                    this.avatarInput = res.data.url;
+                    return true;
+                }
+            },
+            wxSwitchTab: (url) => {
                 wxUtil.wxSwitchTab(url);
+            },
+            bindSexChange(e) {
+                this.user.gender = e.$wx.detail.value;
+            },
+            async formSubmit(e) {
+                let response = await wxUtil.wxPutAuthRequest('/user/save', e.$wx.detail.value);
+                if (response === false) {
+                    return false;
+                }
+                this.user = await this.$store.dispatch('getMe');//actions方法调用方法
+                this.avatarUploadRun = false;
+                this.avatarUploadStatus = true;
+                this.avatarUploadTipsStatus = false;
+                this.avatarUploadTips = '';
+                this.avatarTmp = '';
+                this.progress = 0;
+                this.oldAvatarUrl = this.user.avatarUrl;
+                wxUtil.wxShowToast('保存成功')
             }
-        }
+        },
+        async onShow() {
+            this.user = await this.$store.dispatch('getMe');//actions方法调用方法
+            this.oldAvatarUrl = this.user.avatarUrl;
+            this.avatar = this.user.avatarUrl;
+            this.avatarInput = this.user.avatarUrl;
+        },
     });
 </script>
 <config>
     {
     navigationBarTitleText: '修改信息',
     "usingComponents": {
-    "footer": "~@/components/footer",
-    "input-avatar": "~@/components/form/avatar",
-    "input-picker-sex": "~@/components/form/picker-sex",
-    "input-picker-country": "~@/components/form/picker-country"
+    "footer": "~@/components/footer"
     }
     }
 </config>

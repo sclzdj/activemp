@@ -1,0 +1,53 @@
+<style lang="less">
+    @import "../../wxParse/wxParse.wxss";
+    .content{
+        padding: 10px 2%;
+    }
+</style>
+<template>
+    <import src="../../wxParse/wxParse.wxml"/>
+    <div class="container">
+        <template class="content" is="wxParse" data="{wxParseData:nodes}"/>
+        <!--页脚组件-->
+        <footer></footer>
+    </div>
+</template>
+
+<script>
+    import wepy from '@wepy/core'
+    import {mapState} from '@wepy/x';
+    import store from '../../store';
+    import wxUtil from '../../util/wx.js';
+    import WxParse from '../../wxParse/wxParse.js'  // 第一步：引入
+
+    wepy.page({
+        store,
+
+        data: {
+        },
+
+        computed: {
+            ...mapState(['event']),
+        },
+
+        methods: {},
+
+        async onLoad(options) {
+            let response = await this.$store.dispatch('getEvent', {id: options.id});//actions方法调用方法
+            wx.setNavigationBarTitle({
+                title: this.event.title
+            });
+            let that=this;
+            WxParse.wxParse('content', 'html', that.event.content, that, 5);
+        },
+    });
+</script>
+<config>
+    {
+    navigationBarTitleText: '活动详情',
+    "usingComponents": {
+    "footer": "~@/components/footer"
+    }
+    }
+
+</config>

@@ -1,0 +1,7 @@
+
+<import src="../../wxParse/wxParse.wxml"></import>
+<view class="container">
+    <view is="wxParse" data="{wxParseData:nodes}" class="content"></view>
+    
+    <footer bind_init="_initComponent"></footer>
+</view>

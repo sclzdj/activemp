@@ -2,27 +2,27 @@
 <view class="container">
     
     <view class="avatar">
-        <image src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640" class="weui-media-box__thumb"></image>
+        <image src="{{me.avatarUrl!==''?me.avatarUrl:'../../images/default_avatar.jpg'}}" class="weui-media-box__thumb"></image>
     </view>
     
     <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
             <view class="weui-cell__bd">昵称</view>
-            <view class="weui-cell__ft">说明文字</view>
+            <view class="weui-cell__ft">{{me.nickName}}</view>
         </view>
         <view class="weui-cell">
             <view class="weui-cell__bd">性别</view>
-            <view class="weui-cell__ft">说明文字</view>
+            <view class="weui-cell__ft">{{me.gender==1?'男':(me.gender==2?'女':'未知')}}</view>
         </view>
         <view class="weui-cell">
-            <view class="weui-cell__bd">国家</view>
-            <view class="weui-cell__ft">说明文字</view>
+            <view class="weui-cell__bd">地区</view>
+            <view class="weui-cell__ft">{{me.province}}</view>
         </view>
     </view>
     
     <view class="handle-btn">
         <navigator url="/pages/user/updateInfo"><button type="primary" class="weui-btn">修改信息</button></navigator>
-        <button type="default" class="weui-btn">重置信息</button>
+        <button type="default" open-type="getUserInfo" data-wpy-evt="10-0" bindgetuserinfo="_proxy" class="weui-btn">授权信息</button>
     </view>
     
     <footer bind_init="_initComponent"></footer>
